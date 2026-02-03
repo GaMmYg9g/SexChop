@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Sensual Shop</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login de admin (solo si no está autenticado) -->
+    <div class="admin-login" id="adminLogin">
+        <div class="login-container">
+            <div class="login-header">
+                <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
+                <p>Panel de Control Sensual Shop</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Usuario</label>
+                    <input type="text" id="adminUsername" value="Gammy" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Contraseña</label>
+                    <input type="password" id="adminPassword" required placeholder="Ingresa la contraseña">
+                </div>
+                <button type="submit" class="login-submit-btn">
+                    <i class="fas fa-sign-in-alt"></i> Ingresar
+                </button>
+                <p class="login-hint">Contraseña: admin999</p>
+            </form>
+            
+            <div class="login-footer">
+                <a href="index.html" class="back-to-store">
+                    <i class="fas fa-store"></i> Volver a la Tienda
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel principal (oculto hasta login) -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <h2><i class="fas fa-crown"></i> Admin Panel</h2>
+                <p>Sensual Shop</p>
+            </div>
+            
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-section="dashboard"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-section="products"><i class="fas fa-box-open"></i> Productos</a></li>
+                    <li><a href="#" class="nav-link" data-section="orders"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
+                    <li><a href="#" class="nav-link" data-section="inventory"><i class="fas fa-warehouse"></i> Inventario</a></li>
+                    <li><a href="#" class="nav-link" data-section="promotions"><i class="fas fa-bullhorn"></i> Promociones</a></li>
+                    <li><a href="#" class="nav-link" data-section="shipping"><i class="fas fa-truck"></i> Envíos</a></li>
+                    <li><a href="#" class="nav-link" data-section="store-config"><i class="fas fa-cog"></i> Configuración</a></li>
+                    <li><a href="#" class="nav-link" data-section="social"><i class="fas fa-share-alt"></i> Redes Sociales</a></li>
+                    <li><a href="#" class="nav-link" data-section="users"><i class="fas fa-users"></i> Usuarios</a></li>
+                </ul>
+            </nav>
+            
+            <div class="admin-logout">
+                <button id="adminLogoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+                <a href="index.html" class="view-store-btn">
+                    <i class="fas fa-eye"></i> Ver Tienda
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <h1 id="adminSectionTitle">Dashboard</h1>
+                    <p id="adminSectionSubtitle">Resumen y estadísticas</p>
+                </div>
+                <div class="admin-header-right">
+                    <div class="admin-user">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="adminUserName">Administrador</span>
+                    </div>
+                    <div class="admin-date" id="adminDate"></div>
+                </div>
+            </header>
+
+            <!-- Secciones dinámicas -->
+            <div class="admin-sections">
+                <!-- Dashboard -->
+                <section class="admin-section active" id="dashboardSection">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon total-sales">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalSales">$0.00</h3>
+                                <p>Ventas Totales</p>
+                            </div>
+                            <div class="stat-change" id="salesChange">+0%</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon total-orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalOrders">0</h3>
+                                <p>Pedidos Totales</p>
+                            </div>
+                            <div class="stat-change" id="ordersChange">+0%</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon total-products">
+                                <i class="fas fa-boxes"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalProducts">0</h3>
+                                <p>Productos Activos</p>
+                            </div>
+                            <div class="stat-change" id="productsChange">+0%</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon total-users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalUsers">0</h3>
+                                <p>Usuarios Registrados</p>
+                            </div>
+                            <div class="stat-change" id="usersChange">+0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-card">
+                            <h3>Ventas por Día (Últimos 7 días)</h3>
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <h3>Productos Más Vendidos</h3>
+                            <div class="top-products" id="topProductsList">
+                                <!-- Productos más vendidos -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-orders">
+                        <h3>Pedidos Recientes</h3>
+                        <div class="table-container">
+                            <table id="recentOrdersTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Productos</th>
+                                        <th>Total</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Pedidos recientes -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gestión de Productos -->
+                <section class="admin-section" id="productsSection">
+                    <div class="section-header">
+                        <h2>Gestión de Productos</h2>
+                        <button class="btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus"></i> Agregar Producto
+                        </button>
+                    </div>
+                    
+                    <div class="products-controls">
+                        <div class="search-control">
+                            <input type="text" id="adminSearchProducts" placeholder="Buscar productos...">
+                            <select id="adminCategoryFilter">
+                                <option value="">Todas las categorías</option>
+                            </select>
+                            <select id="adminStatusFilter">
+                                <option value="">Todos los estados</option>
+                                <option value="active">Activo</option>
+                                <option value="inactive">Inactivo</option>
+                                <option value="soldout">Agotado</option>
+                                <option value="low">Casi Agotado</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="productsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Estado</th>
+                                    <th>Ventas</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Productos dinámicos -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Ventas -->
+                <section class="admin-section" id="ordersSection">
+                    <div class="section-header">
+                        <h2>Ventas y Pedidos</h2>
+                        <div class="export-controls">
+                            <button class="btn-secondary" id="exportCSVBtn">
+                                <i class="fas fa-file-csv"></i> Exportar CSV
+                            </button>
+                            <button class="btn-secondary" id="printReportBtn">
+                                <i class="fas fa-print"></i> Imprimir Reporte
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="orders-filters">
+                        <div class="filter-group">
+                            <label>Fecha:</label>
+                            <input type="date" id="ordersDateFrom">
+                            <input type="date" id="ordersDateTo">
+                            <button class="btn-small" id="applyDateFilter">Aplicar</button>
+                            <button class="btn-small btn-outline" id="resetDateFilter">Hoy</button>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Estado:</label>
+                            <select id="ordersStatusFilter">
+                                <option value="">Todos</option>
+                                <option value="pending">Pendiente</option>
+                                <option value="processing">Procesando</option>
+                                <option value="shipped">Enviado</option>
+                                <option value="delivered">Entregado</option>
+                                <option value="cancelled">Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Orden #</th>
+                                    <th>Cliente</th>
+                                    <th>Productos</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Pedidos dinámicos -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="sales-summary">
+                        <div class="summary-card">
+                            <h4>Total Ventas</h4>
+                            <p id="filteredSalesTotal">$0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Total Pedidos</h4>
+                            <p id="filteredOrdersCount">0</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Venta Promedio</h4>
+                            <p id="averageOrderValue">$0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Productos Vendidos</h4>
+                            <p id="totalItemsSold">0</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Inventario -->
+                <section class="admin-section" id="inventorySection">
+                    <div class="section-header">
+                        <h2>Control de Inventario</h2>
+                        <button class="btn-primary" id="bulkUpdateBtn">
+                            <i class="fas fa-edit"></i> Actualización Masiva
+                        </button>
+                    </div>
+                    
+                    <div class="inventory-alerts">
+                        <div class="alert-card low-stock">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Stock Bajo</h4>
+                            <p id="lowStockCount">0 productos</p>
+                        </div>
+                        <div class="alert-card out-of-stock">
+                            <h4><i class="fas fa-times-circle"></i> Agotados</h4>
+                            <p id="outOfStockCount">0 productos</p>
+                        </div>
+                        <div class="alert-card new-products">
+                            <h4><i class="fas fa-star"></i> Nuevos</h4>
+                            <p id="newProductsCount">0 productos</p>
+                        </div>
+                        <div class="alert-card back-in-stock">
+                            <h4><i class="fas fa-undo"></i> De Vuelta</h4>
+                            <p id="backInStockCount">0 productos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="inventoryTable">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Stock Actual</th>
+                                    <th>Stock Mínimo</th>
+                                    <th>Estado</th>
+                                    <th>Última Venta</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                                <!-- Inventario dinámico -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Promociones -->
+                <section class="admin-section" id="promotionsSection">
+                    <div class="section-header">
+                        <h2>Promociones y Anuncios</h2>
+                        <button class="btn-primary" id="addPromoBtn">
+                            <i class="fas fa-plus"></i> Nueva Promoción
+                        </button>
+                    </div>
+                    
+                    <div class="promotions-grid" id="promotionsGrid">
+                        <!-- Promociones dinámicas -->
+                    </div>
+                    
+                    <div class="promo-form-container" id="promoFormContainer" style="display: none;">
+                        <h3 id="promoFormTitle">Nueva Promoción</h3>
+                        <form id="promoForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="promoTitle">Título (opcional)</label>
+                                    <input type="text" id="promoTitle" placeholder="Ej: ¡Oferta Especial!">
+                                </div>
+                                <div class="form-group">
+                                    <label for="promoType">Tipo</label>
+                                    <select id="promoType">
+                                        <option value="banner">Banner Principal</option>
+                                        <option value="popup">Popup</option>
+                                        <option value="notification">Notificación</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="promoImage">Imagen (opcional)</label>
+                                <div class="image-upload">
+                                    <input type="file" id="promoImage" accept="image/*" style="display: none;">
+                                    <button type="button" class="btn-outline" id="choosePromoImage">
+                                        <i class="fas fa-image"></i> Elegir Imagen
+                                    </button>
+                                    <span id="promoImageName">Ninguna imagen seleccionada</span>
+                                </div>
+                                <div class="image-preview" id="promoImagePreview"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="promoMessage">Mensaje/Descripción *</label>
+                                <textarea id="promoMessage" rows="4" required placeholder="Describe tu promoción..."></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="promoStart">Fecha Inicio</label>
+                                    <input type="datetime-local" id="promoStart" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="promoEnd">Fecha Fin</label>
+                                    <input type="datetime-local" id="promoEnd" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="promoProducts">Productos Relacionados (opcional)</label>
+                                <select id="promoProducts" multiple>
+                                    <!-- Productos cargados dinámicamente -->
+                                </select>
+                                <small>Mantén Ctrl para seleccionar múltiples</small>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Guardar Promoción</button>
+                                <button type="button" class="btn-secondary" id="cancelPromoBtn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Envíos -->
+                <section class="admin-section" id="shippingSection">
+                    <div class="section-header">
+                        <h2>Configuración de Envíos</h2>
+                        <button class="btn-primary" id="addProvinceBtn">
+                            <i class="fas fa-plus"></i> Agregar Provincia
+                        </button>
+                    </div>
+                    
+                    <div class="shipping-config">
+                        <h3>Costos por Provincia</h3>
+                        <div class="table-container">
+                            <table id="shippingTable">
+                                <thead>
+                                    <tr>
+                                        <th>Provincia</th>
+                                        <th>Costo de Envío</th>
+                                        <th>Tiempo Estimado</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="shippingTableBody">
+                                    <!-- Provincias dinámicas -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="shipping-form-container" id="shippingFormContainer" style="display: none;">
+                        <h3 id="shippingFormTitle">Agregar/Editar Provincia</h3>
+                        <form id="shippingForm">
+                            <div class="form-group">
+                                <label for="provinceName">Nombre de la Provincia *</label>
+                                <input type="text" id="provinceName" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="shippingCost">Costo de Envío *</label>
+                                    <input type="number" id="shippingCost" step="0.01" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="deliveryTime">Tiempo Estimado (días) *</label>
+                                    <input type="number" id="deliveryTime" min="1" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="provinceStatus">Estado</label>
+                                <select id="provinceStatus">
+                                    <option value="active">Activo</option>
+                                    <option value="inactive">Inactivo</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Guardar Provincia</button>
+                                <button type="button" class="btn-secondary" id="cancelShippingBtn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Configuración de Tienda -->
+                <section class="admin-section" id="storeConfigSection">
+                    <div class="section-header">
+                        <h2>Configuración de la Tienda</h2>
+                    </div>
+                    
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <h4><i class="fas fa-phone"></i> Información de Contacto</h4>
+                            <form id="contactConfigForm">
+                                <div class="form-group">
+                                    <label for="storePhone">Teléfono de WhatsApp *</label>
+                                    <input type="text" id="storePhone" required placeholder="Ej: +1234567890">
+                                    <small>Número al que se enviarán los pedidos</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="storeEmail">Email de Contacto</label>
+                                    <input type="email" id="storeEmail" placeholder="tienda@email.com">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="storeAddress">Dirección Física (opcional)</label>
+                                    <textarea id="storeAddress" rows="2" placeholder="Dirección de la tienda"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn-primary">Guardar Cambios</button>
+                            </form>
+                        </div>
+                        
+                        <div class="config-card">
+                            <h4><i class="fas fa-paint-brush"></i> Apariencia</h4>
+                            <form id="appearanceConfigForm">
+                                <div class="form-group">
+                                    <label for="storeName">Nombre de la Tienda</label>
+                                    <input type="text" id="storeName" value="Sensual Shop">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="storeLogo">Logo (URL o subir archivo)</label>
+                                    <input type="text" id="storeLogo" placeholder="URL del logo">
+                                    <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+                                    <button type="button" class="btn-outline" id="uploadLogoBtn">Subir Logo</button>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="storeTheme">Tema de Colores</label>
+                                    <div class="theme-colors">
+                                        <div class="color-option" data-color="#ff4081">
+                                            <div class="color-preview" style="background-color: #ff4081;"></div>
+                                            <span>Rosa</span>
+                                        </div>
+                                        <div class="color-option" data-color="#9c27b0">
+                                            <div class="color-preview" style="background-color: #9c27b0;"></div>
+                                            <span>Morado</span>
+                                        </div>
+                                        <div class="color-option" data-color="#e91e63">
+                                            <div class="color-preview" style="background-color: #e91e63;"></div>
+                                            <span>Fucsia</span>
+                                        </div>
+                                        <div class="color-option" data-color="#673ab7">
+                                            <div class="color-preview" style="background-color: #673ab7;"></div>
+                                            <span>Índigo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="backgroundImage">Imagen de Fondo</label>
+                                    <div class="background-control">
+                                        <select id="backgroundType">
+                                            <option value="color">Color Sólido</option>
+                                            <option value="image">Imagen</option>
+                                        </select>
+                                        <input type="file" id="backgroundUpload" accept="image/*" style="display: none;">
+                                        <button type="button" class="btn-outline" id="chooseBackgroundBtn">Elegir Imagen</button>
+                                    </div>
+                                    <div class="background-preview" id="backgroundPreview"></div>
+                                </div>
+                                
+                                <button type="submit" class="btn-primary">Aplicar Cambios</button>
+                            </form>
+                        </div>
+                        
+                        <div class="config-card">
+                            <h4><i class="fas fa-shopping-cart"></i> Configuración de Compras</h4>
+                            <form id="purchaseConfigForm">
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="requireLogin" checked>
+                                        <span>Requerir inicio de sesión para comprar</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="allowRatings" checked>
+                                        <span>Permitir calificaciones de productos</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="showStock" checked>
+                                        <span>Mostrar stock disponible</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="currency">Moneda</label>
+                                    <select id="currency">
+                                        <option value="USD">USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="MXN">MXN ($)</option>
+                                        <option value="COP">COP ($)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="taxPercentage">Porcentaje de Impuesto (%)</label>
+                                    <input type="number" id="taxPercentage" min="0" max="50" step="0.1" value="0">
+                                </div>
+                                
+                                <button type="submit" class="btn-primary">Guardar Configuración</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Redes Sociales -->
+                <section class="admin-section" id="socialSection">
+                    <div class="section-header">
+                        <h2>Redes Sociales y Enlaces</h2>
+                        <button class="btn-primary" id="addSocialLinkBtn">
+                            <i class="fas fa-plus"></i> Agregar Enlace
+                        </button>
+                    </div>
+                    
+                    <div class="social-links-grid" id="socialLinksGrid">
+                        <!-- Enlaces sociales dinámicos -->
+                    </div>
+                    
+                    <div class="social-form-container" id="socialFormContainer" style="display: none;">
+                        <h3 id="socialFormTitle">Agregar/Editar Enlace</h3>
+                        <form id="socialForm">
+                            <div class="form-group">
+                                <label for="socialPlatform">Plataforma</label>
+                                <select id="socialPlatform">
+                                    <option value="whatsapp">WhatsApp</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="twitter">Twitter/X</option>
+                                    <option value="tiktok">TikTok</option>
+                                    <option value="telegram">Telegram</option>
+                                    <option value="youtube">YouTube</option>
+                                    <option value="other">Otro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="socialName">Nombre (opcional)</label>
+                                <input type="text" id="socialName" placeholder="Ej: Nuestro Facebook">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="socialUrl">URL *</label>
+                                <input type="url" id="socialUrl" required placeholder="https://...">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="socialIcon">Ícono (opcional)</label>
+                                <input type="text" id="socialIcon" placeholder="fas fa-...">
+                                <small>Usa clases de FontAwesome</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="socialDisplay">Mostrar en</label>
+                                <select id="socialDisplay" multiple>
+                                    <option value="menu" selected>Menú Principal</option>
+                                    <option value="footer" selected>Footer</option>
+                                    <option value="contact">Página de Contacto</option>
+                                </select>
+                                <small>Mantén Ctrl para seleccionar múltiples</small>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Guardar Enlace</button>
+                                <button type="button" class="btn-secondary" id="cancelSocialBtn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Gestión de Usuarios -->
+                <section class="admin-section" id="usersSection">
+                    <div class="section-header">
+                        <h2>Usuarios Registrados</h2>
+                    </div>
+                    
+                    <div class="users-stats">
+                        <div class="stat-card small">
+                            <h4>Total Usuarios</h4>
+                            <p id="totalUsersCount">0</p>
+                        </div>
+                        <div class="stat-card small">
+                            <h4>Activos (30 días)</h4>
+                            <p id="activeUsersCount">0</p>
+                        </div>
+                        <div class="stat-card small">
+                            <h4>Nuevos Hoy</h4>
+                            <p id="newUsersToday">0</p>
+                        </div>
+                        <div class="stat-card small">
+                            <h4>Compraron</h4>
+                            <p id="usersWithPurchases">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Registro</th>
+                                    <th>Última Visita</th>
+                                    <th>Pedidos</th>
+                                    <th>Total Gastado</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Usuarios dinámicos -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para productos -->
+    <div class="modal" id="productModal">
+        <div class="modal-content product-modal-content">
+            <div class="modal-header">
+                <h3 id="productModalTitle">Agregar Producto</h3>
+                <button class="close-modal" id="closeProductModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="productForm" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productName">Nombre del Producto *</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Categoría *</label>
+                            <select id="productCategory" required>
+                                <option value="">Selecciona una categoría</option>
+                                <!-- Categorías dinámicas -->
+                            </select>
+                            <button type="button" class="btn-small" id="addCategoryBtn">+ Nueva</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productDescription">Descripción *</label>
+                        <textarea id="productDescription" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productPrice">Precio *</label>
+                            <input type="number" id="productPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Stock Inicial *</label>
+                            <input type="number" id="productStock" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productMinStock">Stock Mínimo</label>
+                            <input type="number" id="productMinStock" min="0" value="3">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productImage">Imagen del Producto *</label>
+                        <div class="image-upload-area" id="imageUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arrastra una imagen o haz clic para seleccionar</p>
+                            <input type="file" id="productImage" accept="image/*" style="display: none;">
+                            <button type="button" class="btn-outline" id="chooseProductImage">Seleccionar Imagen</button>
+                        </div>
+                        <div class="image-preview-large" id="productImagePreview"></div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productStatus">Estado</label>
+                            <select id="productStatus">
+                                <option value="active">Activo</option>
+                                <option value="inactive">Inactivo</option>
+                                <option value="new">Nuevo</option>
+                                <option value="sale">En Oferta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productTags">Etiquetas</label>
+                            <input type="text" id="productTags" placeholder="Separadas por comas">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="productFeatured">
+                            <span>Destacar este producto</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="productSubmitBtn">Guardar Producto</button>
+                        <button type="button" class="btn-secondary" id="cancelProductBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificaciones admin -->
+    <div class="admin-notification" id="adminNotification"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Sensual Shop</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos inline para asegurar funcionamiento */
+        .login-background {
+            background: linear-gradient(135deg, #9c27b0 0%, #ff4081 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .login-logo {
+            margin-bottom: 30px;
+        }
+        
+        .login-logo h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(135deg, #9c27b0 0%, #ff4081 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .login-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: #ff4081;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ff4081;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #ff4081;
+            outline: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #9c27b0 0%, #ff4081 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .login-footer {
+            margin-top: 20px;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 15px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .back-to-home:hover {
+            color: #ff4081;
+        }
+        
+        .error-message {
+            color: #f44336;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .login-logo h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-background">
+        <div class="login-container">
+            <div class="login-logo">
+                <h1>Sensual Shop</h1>
+                <p>Accede a tu cuenta</p>
+            </div>
+            
+            <div class="login-tabs">
+                <button class="tab-btn active" data-tab="login">Iniciar Sesión</button>
+                <button class="tab-btn" data-tab="register">Registrarse</button>
+            </div>
+            
+            <!-- Formulario de Login -->
+            <form id="loginForm" class="tab-content active">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Ingresar</button>
+                <div class="error-message" id="loginError"></div>
+            </form>
+            
+            <!-- Formulario de Registro -->
+            <form id="registerForm" class="tab-content" style="display: none;">
+                <div class="form-group">
+                    <label for="regName">Nombre</label>
+                    <input type="text" id="regName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regConfirm">Confirmar Contraseña</label>
+                    <input type="password" id="regConfirm" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Crear Cuenta</button>
+                <div class="error-message" id="registerError"></div>
+            </form>
+            
+            <div class="login-footer">
+                <p>¿Olvidaste tu contraseña? <a href="#" id="forgotPassword">Recupérala aquí</a></p>
+                <a href="index.html" class="back-to-home">
+                    <i class="fas fa-arrow-left"></i> Volver a la tienda
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginError = document.getElementById('loginError');
+            const registerError = document.getElementById('registerError');
+            
+            // Cambiar entre tabs
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    
+                    // Actualizar botones activos
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mostrar formulario correspondiente
+                    if (tab === 'login') {
+                        loginForm.style.display = 'block';
+                        registerForm.style.display = 'none';
+                    } else {
+                        loginForm.style.display = 'none';
+                        registerForm.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Login
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // Obtener usuarios del localStorage
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    // Guardar sesión
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    // Redirigir a la tienda
+                    window.location.href = 'index.html';
+                } else {
+                    loginError.textContent = 'Email o contraseña incorrectos';
+                }
+            });
+            
+            // Registro
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('regName').value;
+                const email = document.getElementById('regEmail').value;
+                const password = document.getElementById('regPassword').value;
+                const confirm = document.getElementById('regConfirm').value;
+                
+                // Validaciones
+                if (password !== confirm) {
+                    registerError.textContent = 'Las contraseñas no coinciden';
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    registerError.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                    return;
+                }
+                
+                // Obtener usuarios existentes
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // Verificar si el email ya existe
+                if (users.find(u => u.email === email)) {
+                    registerError.textContent = 'Este email ya está registrado';
+                    return;
+                }
+                
+                // Crear nuevo usuario
+                const newUser = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    password: password,
+                    createdAt: new Date().toISOString(),
+                    role: 'user'
+                };
+                
+                // Guardar usuario
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Iniciar sesión automáticamente
+                localStorage.setItem('currentUser', JSON.stringify(newUser));
+                
+                // Redirigir a la tienda
+                window.location.href = 'index.html';
+            });
+            
+            // Recuperar contraseña
+            document.getElementById('forgotPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Para recuperar tu contraseña, contacta al administrador.');
+            });
+        });
+    </script>
+</body>
+</html>

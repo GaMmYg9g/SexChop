@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tienda Erótica - Sensual Shop</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#ff4081">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <!-- Overlay para menú -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Encabezado -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <span class="logo-text">Sensual</span>
+                <span class="logo-highlight">Shop</span>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Buscar productos...">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <button class="user-btn" id="userBtn">
+                <i class="fas fa-user"></i>
+            </button>
+            <button class="cart-btn" id="cartBtn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Menú lateral -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-text">Sensual</span>
+                <span class="logo-highlight">Shop</span>
+            </div>
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-content">
+            <!-- Usuario -->
+            <div class="user-section" id="userSection">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Invitado</span>
+                    <button class="login-btn" id="sidebarLoginBtn">Iniciar Sesión</button>
+                </div>
+            </div>
+            
+            <!-- Navegación -->
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-category="all"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#" class="nav-link" data-category="new"><i class="fas fa-star"></i> Nuevos</a></li>
+                <li><a href="#" class="nav-link" data-category="bestsellers"><i class="fas fa-fire"></i> Más Vendidos</a></li>
+                
+                <!-- Categorías dinámicas -->
+                <li class="nav-divider">Categorías</li>
+                <div id="categoriesList"></div>
+                
+                <li class="nav-divider">Información</li>
+                <li><a href="#" class="nav-link" id="contactInfoBtn"><i class="fas fa-info-circle"></i> Contacto</a></li>
+                <li><a href="#" class="nav-link" id="privacyBtn"><i class="fas fa-shield-alt"></i> Privacidad</a></li>
+                <li><a href="#" class="nav-link" id="socialLinksBtn"><i class="fas fa-share-alt"></i> Redes Sociales</a></li>
+                
+                <!-- Enlaces dinámicos desde admin -->
+                <div id="dynamicLinks"></div>
+            </ul>
+            
+            <!-- Botón admin (solo visible para admin) -->
+            <div class="admin-section" id="adminSection" style="display: none;">
+                <a href="admin.html" class="admin-btn">
+                    <i class="fas fa-cog"></i> Panel de Administración
+                </a>
+            </div>
+        </div>
+        
+        <div class="sidebar-footer">
+            <p class="copyright">&copy; 2024 Sensual Shop</p>
+        </div>
+    </nav>
+
+    <!-- Banner de promociones -->
+    <div class="promo-banner" id="promoBanner">
+        <div class="promo-content" id="promoContent">
+            <!-- Contenido dinámico desde admin -->
+        </div>
+        <button class="close-promo" id="closePromo">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="background-overlay"></div>
+        
+        <!-- Filtros -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="new">Nuevos</button>
+            <button class="filter-btn" data-filter="sale">Ofertas</button>
+            <button class="filter-btn" data-filter="back">De Vuelta</button>
+        </div>
+        
+        <!-- Grid de productos -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Productos cargados dinámicamente -->
+        </div>
+        
+        <!-- Mensaje cuando no hay productos -->
+        <div class="no-products" id="noProducts" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>No se encontraron productos</h3>
+            <p>Intenta con otra búsqueda o categoría</p>
+        </div>
+    </main>
+
+    <!-- Carrito de compras -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <!-- Items del carrito -->
+        </div>
+        
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span id="cartSubtotal">$0.00</span>
+            </div>
+            <div class="cart-shipping">
+                <span>Envío:</span>
+                <span id="cartShipping">$0.00</span>
+            </div>
+            <div class="cart-total-final">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            
+            <button class="checkout-btn" id="checkoutBtn">Proceder al Pago</button>
+            <button class="clear-cart-btn" id="clearCartBtn">Vaciar Carrito</button>
+        </div>
+    </div>
+
+    <!-- Modal de login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Iniciar Sesión</h3>
+                <button class="close-modal" id="closeLoginModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Registrarse</button>
+                </div>
+                
+                <!-- Formulario Login -->
+                <form id="loginForm" class="tab-content active">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Ingresar</button>
+                </form>
+                
+                <!-- Formulario Registro -->
+                <form id="registerForm" class="tab-content">
+                    <div class="form-group">
+                        <label for="registerName">Nombre</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirm">Confirmar Contraseña</label>
+                        <input type="password" id="registerConfirm" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Crear Cuenta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content checkout-content">
+            <div class="modal-header">
+                <h3>Finalizar Compra</h3>
+                <button class="close-modal" id="closeCheckoutModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="checkoutForm">
+                    <div class="form-section">
+                        <h4>Información Personal</h4>
+                        <div class="form-group">
+                            <label for="clientName">Nombre (opcional)</label>
+                            <input type="text" id="clientName" placeholder="Tu nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientPhone">Teléfono de Contacto *</label>
+                            <input type="tel" id="clientPhone" required placeholder="+1234567890">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Dirección de Envío</h4>
+                        <div class="form-group">
+                            <label for="clientAddress">Dirección Completa *</label>
+                            <textarea id="clientAddress" rows="3" required placeholder="Calle, número, sector, referencia..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientProvince">Provincia *</label>
+                            <select id="clientProvince" required>
+                                <option value="">Selecciona una provincia</option>
+                                <!-- Provincias cargadas dinámicamente -->
+                            </select>
+                            <div class="shipping-cost" id="shippingCostDisplay">
+                                Costo de envío: $0.00
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Método de Pago</h4>
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="cash" checked>
+                                <span class="payment-label">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    Efectivo
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="card">
+                                <span class="payment-label">
+                                    <i class="fas fa-credit-card"></i>
+                                    Tarjeta
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <h4>Resumen del Pedido</h4>
+                        <div class="summary-items" id="summaryItems"></div>
+                        <div class="summary-total">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="summarySubtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Envío:</span>
+                                <span id="summaryShipping">$0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="summaryTotal">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn confirm-btn">
+                        <i class="fas fa-whatsapp"></i> Enviar Pedido por WhatsApp
+                    </button>
+                    <p class="disclaimer">Al confirmar, se enviará tu pedido al vendedor por WhatsApp</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de información de contacto -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="infoModalTitle">Información de Contacto</h3>
+                <button class="close-modal" id="closeInfoModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="infoModalContent">
+                <!-- Contenido dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sensual Shop</h4>
+                <p>Tu tienda de productos eróticos de confianza. Discreción y calidad garantizada.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p id="footerPhone">Teléfono: Cargando...</p>
+                <p id="footerEmail">Email: info@sensualshop.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="#" class="footer-link" id="privacyFooter">Política de Privacidad</a>
+                <a href="#" class="footer-link" id="termsFooter">Términos y Condiciones</a>
+                <p class="copyright">&copy; 2024 Sensual Shop</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notificaciones -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Inicializar PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Error registrando ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
