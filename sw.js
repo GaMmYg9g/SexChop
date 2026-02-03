@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensual-shop-v1.0.0';
+const CACHE_NAME = 'sensual-shop-v1.0.1';
 const urlsToCache = [
   'index.html',
   'admin.html',
